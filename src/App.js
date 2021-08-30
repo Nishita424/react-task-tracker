@@ -27,7 +27,7 @@ function App() {
       id: 4,
       text: 'Visit Dentist',
       day: 'Thursday',
-      reminder: false,
+      reminder: true,
     },
   ]);
 
