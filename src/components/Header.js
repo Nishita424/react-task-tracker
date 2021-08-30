@@ -8,15 +8,15 @@ const Header = ({ title }) => {
   };
 
   return (
-    <header className="header">
-      <h1>{title}</h1>
-      <Button name="Add" color="Green" onClick={onClick} />
+    <header className="flex justify-between items-center py-2">
+      <h1 className="text-3xl font-serif">{title}</h1>
+      <Button name="Add" color="White" bgColor="Green" onClick={onClick} />
     </header>
   );
 };
 
 Header.defaultProps = {
-  title: 'Default',
+  title: 'React App',
 };
 
 Header.propTypes = {
