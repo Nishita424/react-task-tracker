@@ -8,15 +8,14 @@ const Header = ({ title, onAdd, showAddBtn }) => {
   return (
     <header className="flex justify-between items-center py-2">
       <h1 className="text-3xl font-serif">{title}</h1>
-      {
-        location.pathname === '/' && 
+      {location.pathname === '/' && (
         <Button
           name={showAddBtn ? 'Close' : 'Add'}
           color="White"
-          bgColor={showAddBtn ? '#e50000' : 'Green'}
+          bgColor={showAddBtn ? '#e50000' : '#76B947'}
           onClick={onAdd}
         />
-      }
+      )}
     </header>
   );
 };
