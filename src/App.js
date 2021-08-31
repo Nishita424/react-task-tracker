@@ -1,38 +1,45 @@
 import 'tailwindcss/tailwind.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddTask from './components/AddTask';
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: 'Food shopping',
-      day: 'Monday',
-      reminder: false,
-    },
-    {
-      id: 2,
-      text: 'Laptop screen repair',
-      day: 'Tuesday',
-      reminder: false,
-    },
-    {
-      id: 3,
-      text: 'Cook',
-      day: 'Wednesday',
-      reminder: false,
-    },
-    {
-      id: 4,
-      text: 'Visit Dentist',
-      day: 'Thursday',
-      reminder: true,
-    },
-  ]);
-
+  const [tasks, setTasks] = useState([]);
+  
+  // 1. Using chaining of promises
+  /**
+   * 
+   const fetchTasks = () => {
+     fetch('http://localhost:5000/tasks')
+       .then(
+         (res) => {
+           res.json()
+             .then((resp) => {
+               setTasks(resp);
+             });
+         });
+   }
+   useEffect(() => {
+     fetchTasks();
+   }, []);
+   */
+  
+  // 2. Using async-await
+  const fetchTasks = async () => {
+    const response = await fetch('http://localhost:5000/tasks');
+    const data = await response.json();
+    return data;
+  }
+  // Self invoking syntax - doesnt work for arrow functions
+  useEffect(() => {
+    (async function getTasks() {
+      const res = await fetchTasks();
+      setTasks(res);
+    }());
+  }, []);
+  
   // setTasks([
   //   ...tasks,
   //   {
@@ -70,7 +77,7 @@ function App() {
 
   return (
     <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
-      <Header title="Task Tracker App" onAdd={toggleAddBtn} showAddBtn={showAddTask} />
+      <Header title="Task Tracker" onAdd={toggleAddBtn} showAddBtn={showAddTask} />
       {showAddTask && <AddTask onAdd={addTask} />}
       <div className="my-3">
         {tasks.length ? (
