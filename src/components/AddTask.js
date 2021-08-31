@@ -59,7 +59,7 @@ const AddTask = ({ onAdd }) => {
       <input
           type="submit"
           value="Save Task"
-          className={`block w-full rounded-lg py-1 bg-red-400 text-gray-100 cursor-wait my-4 ${!name ? 'cursor-not-allowed' : ''}`}
+          className={`block w-full rounded-lg py-1 bg-blue-600 text-gray-100 cursor-wait my-4 ${!name ? 'cursor-not-allowed' : ''}`}
       />
     </form>
   );

@@ -9,7 +9,7 @@ const Header = ({ title, onAdd, showAddBtn }) => {
       <Button
         name={showAddBtn ? 'Close' : 'Add'}
         color="White"
-        bgColor={showAddBtn ? 'Red' : 'Green'}
+        bgColor={showAddBtn ? '#e50000' : 'Green'}
         onClick={onAdd}
       />
     </header>
