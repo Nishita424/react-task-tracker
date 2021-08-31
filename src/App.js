@@ -8,6 +8,7 @@ function App() {
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
   
+  // GET API
   // 1. Using chaining of promises
   /**
    * 
@@ -40,35 +41,66 @@ function App() {
     }());
   }, []);
   
-  // setTasks([
-  //   ...tasks,
-  //   {
-  //     id: '5',
-  //     text: 'Meeting',
-  //     day: 'Friday',
-  //     reminder: false,
-  //   },
-  // ]);
+  const fetchTask = async (taskId) => {
+    const response = await fetch(`http://localhost:5000/tasks/${taskId}`);
+    const data = await response.json();
+    return data;
+  }
 
   // Without using complex concepts like context API / Redux
-  const deleteTask = (e) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== e.id));
+  
+  // DELETE API - Response: {}
+  const deleteTask = async (e) => {
+    await fetch(`http://localhost:5000/tasks/${e.id}`, {
+      method: 'DELETE',
+    });
+    // Deleting on UI or call GET API
+    // setTasks((tasks) => tasks.filter((task) => task.id !== e.id));
+    const updatedTasks = await fetchTasks();
+    setTasks(updatedTasks);
   };
 
-  const toggleReminder = (taskId) => {
-    setTasks((tasks) =>
-      tasks.map(taskObj => {
-        return taskObj.id === taskId
-          ? { ...taskObj, reminder: !taskObj.reminder }
-          : taskObj;
-      })
-    );
+  // UPDATE API - Response: request body
+  const toggleReminder = async (taskId) => {
+    const task = await fetchTask(taskId);
+    const updatedTask = { ...task, reminder: !task.reminder };
+
+    const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(updatedTask),
+    });
+    // Updating task reminder on UI or call GET API
+    // const data = response.json();
+    // setTasks((tasks) =>
+    //   tasks.map(taskObj => {
+    //     return taskObj.id === taskId
+    //       ? { ...taskObj, reminder: data.reminder }
+    //       : taskObj;
+    //   })
+    // );
+    const updatedTasks = await fetchTasks();
+    setTasks(updatedTasks);
   };
   
-  const addTask = (newTask) => {
-    const id = Math.floor(Math.random() * 10000);
-    newTask = { ...newTask, 'id': id };
-    setTasks([...tasks, newTask]);
+  // POST API - Response: data posted
+  const addTask = async (newTask) => {
+    // const id = Math.floor(Math.random() * 10000);
+    const response = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newTask)
+    });
+    
+    // Adding new task from UI or call GET API
+    // const task = await response.json();
+    // setTasks([...tasks, task]);
+    const updatedTasks = await fetchTasks();
+    setTasks(updatedTasks);
   };
   
   const toggleAddBtn = () => {
