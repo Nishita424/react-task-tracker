@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 
-const Header = ({ title, onAdd }) => {
+const Header = ({ title, onAdd, showAddBtn }) => {
   return (
     <header className="flex justify-between items-center py-2">
       <h1 className="text-3xl font-serif">{title}</h1>
-      <Button name="Add" color="White" bgColor="Green" onClick={onAdd} />
+      <Button
+        name={showAddBtn ? 'Close' : 'Add'}
+        color="White"
+        bgColor={showAddBtn ? 'Red' : 'Green'}
+        onClick={onAdd}
+      />
     </header>
   );
 };

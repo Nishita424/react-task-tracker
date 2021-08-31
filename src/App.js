@@ -70,7 +70,7 @@ function App() {
 
   return (
     <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
-      <Header title="Task Tracker App" onAdd={toggleAddBtn} />
+      <Header title="Task Tracker App" onAdd={toggleAddBtn} showAddBtn={showAddTask} />
       {showAddTask && <AddTask onAdd={addTask} />}
       <div className="my-3">
         {tasks.length ? (
