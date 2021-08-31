@@ -1,8 +1,13 @@
 import 'tailwindcss/tailwind.css';
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 import { useState, useEffect } from 'react';
 import AddTask from './components/AddTask';
+import Footer from './components/Footer';
+import About from './components/About';
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
@@ -108,21 +113,33 @@ function App() {
   }
 
   return (
-    <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
-      <Header title="Task Tracker" onAdd={toggleAddBtn} showAddBtn={showAddTask} />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      <div className="my-3">
-        {tasks.length ? (
-          <Tasks
-            tasks={tasks}
-            onDelete={deleteTask}
-            onToggle={toggleReminder}
-          />
-        ) : (
-          'No Tasks to show'
-        )}
+    <Router>
+      <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
+        <Header
+          title="Task Tracker"
+          onAdd={toggleAddBtn}
+          showAddBtn={showAddTask}
+        />
+        <Route path='/' exact render={() => (
+          <>
+            {showAddTask && <AddTask onAdd={addTask} />}
+            <div className="my-3">
+              {tasks.length ? (
+                <Tasks
+                  tasks={tasks}
+                  onDelete={deleteTask}
+                  onToggle={toggleReminder}
+                />
+              ) : (
+                'No Tasks to show'
+              )}
+            </div>
+          </>
+        )} />
+        <Route path='/about' component={About}/>
+        <Footer />
       </div>
-    </div>
+    </Router>
   );
 }
 
