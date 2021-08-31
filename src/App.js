@@ -5,6 +5,7 @@ import { useState } from 'react';
 import AddTask from './components/AddTask';
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -62,11 +63,15 @@ function App() {
     newTask = { ...newTask, 'id': id };
     setTasks([...tasks, newTask]);
   };
+  
+  const toggleAddBtn = () => {
+    setShowAddTask(!showAddTask);
+  }
 
   return (
     <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
-      <Header title="Task Tracker App" />
-      <AddTask onAdd={addTask} />
+      <Header title="Task Tracker App" onAdd={toggleAddBtn} />
+      {showAddTask && <AddTask onAdd={addTask} />}
       <div className="my-3">
         {tasks.length ? (
           <Tasks
