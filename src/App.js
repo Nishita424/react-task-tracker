@@ -2,6 +2,7 @@ import 'tailwindcss/tailwind.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 import { useState } from 'react';
+import AddTask from './components/AddTask';
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -43,12 +44,10 @@ function App() {
 
   // Without using complex concepts like context API / Redux
   const deleteTask = (e) => {
-    console.log('delete', e.id);
     setTasks((tasks) => tasks.filter((task) => task.id !== e.id));
   };
 
   const toggleReminder = (taskId) => {
-    console.log('toggle', taskId);
     setTasks((tasks) =>
       tasks.map(taskObj => {
         return taskObj.id === taskId
@@ -57,10 +56,17 @@ function App() {
       })
     );
   };
+  
+  const addTask = (newTask) => {
+    const id = Math.floor(Math.random() * 10000);
+    newTask = { ...newTask, 'id': id };
+    setTasks([...tasks, newTask]);
+  };
 
   return (
     <div className="mx-auto max-w-xl rounded shadow-lg p-4 mt-12 border border-solid">
       <Header title="Task Tracker App" />
+      <AddTask onAdd={addTask} />
       <div className="my-3">
         {tasks.length ? (
           <Tasks
