@@ -13,15 +13,15 @@
       "id": 8
     },
     {
-      "text": "New",
-      "day": "day",
+      "text": "Client meeting",
+      "day": "Tuesday",
       "reminder": true,
       "id": 9
     },
     {
-      "text": "nnew",
-      "day": "test",
-      "reminder": true,
+      "text": "Interview",
+      "day": "Thursday",
+      "reminder": false,
       "id": 10
     }
   ]
